@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="myapp">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="angular.min.js"></script>
+    <title>Assignment</title>
+    <script src="simpleModel.js"></script>
+
+	 <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <script src="http://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div data-ng-controller="main" class="container">
+        <h1>Select two text files</h1>
+            <input type="file" on-read-file="showContent($fileContent); getArray();"/>
+                <div>
+                    <h2>File content is:</h2>
+                    <pre>{{ allMyNumbers }}</pre>
+                    <hr>
+                <button class="btn btn-primary" ng-click="calculate()"> Calculate </button>
+                    
+            <br />        
+            <br />
+    <div>
+            <!-- X Table -->
+            <table class="table-condensed table-bordered table-responsive" ng-if="allMyNumbers[0]">
+				<thead>	
+					<th>File X</th>
+                    <th></th>
+                <thead>
+                <tbody>
+                    <tr ng-repeat="number in allMyNumbers[0]">
+                        <td></td>
+                            <td>{{ allMyNumbers[0][$index] }}</td>
+                    </tr>
+                </tbody>
+                     <tfoot ng-if="sumX"> 
+                        <th>sum</th>
+                            <td>{{sumX}}</td>
+                        <tr><th>mean</th>
+                            <td>{{meanX}}</td></tr>
+                        <th>standard dev</th>
+                            <td>{{stanX}}</td>
+                        <tr>
+                        </tr>
+                    </tfoot>
+            </table>
+<br />
+            <!-- Y Table-->
+            <table class="table-condensed table-bordered table-responsive" ng-if="allMyNumbers[1]">
+				<thead>	
+					<th>File Y</th>
+                    <th></th>
+                <thead>
+                <tbody>
+                    <tr ng-repeat="number in allMyNumbers[1]">
+                        <td></td>
+                            <td>{{ allMyNumbers[1][$index] }}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot ng-if="sumY">
+                        <th>sum</th>
+                            <td>{{sumY}}</td>
+                    <tr><th>mean</th>
+                            <td>{{meanY}}</td></tr>
+                        <th>standard dev</th>
+                            <td>{{stanY}}</td>
+                    </tfoot>
+
+            </table>
+<br />
+            <!-- Linear Regression -->
+            <table class="table-condensed table-bordered table-responsive" ng-if="beta0">
+				<thead>	
+					<th>X</th>
+					<th>Y</th>
+                    <th>XY</th>
+                    <th>XX</th>
+                <thead>
+                <tbody>
+                    <tr ng-repeat="xy in XiYi track by $index">
+                            <td>{{ allMyNumbers[0][$index] }}</td>
+                            <td>{{ allMyNumbers[1][$index] }}</td>
+                            <td>{{ XiYi[$index] }}</td>
+                            <td>{{ xSquared[$index] }}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <td></td>
+                    <th>Sum</th>
+                    <td>{{XiYiSum}}</td>
+                    <td>{{xSquaredSum}}</td>
+                    <tr>
+                        <td></td>
+                        <th>beta1</th>
+                        <td>{{beta1}}</td>
+                    </tr>
+                        <td></td>
+                        <th>beta0</th>
+                        <td>{{beta0}}</td>
+                    </tfoot>
+            </table>
+<br />
+            <!-- Correlation -->
+            <table class="table-condensed table-bordered table-responsive" ng-if="XiYiSum">
+				<thead>	
+					<th>X</th>
+					<th>Y</th>
+                    <th>XY</th>
+                    <th>XX</th>
+                    <th>YY</th>
+                <thead>
+                <tbody>
+                    <tr ng-repeat="xy in XiYi track by $index">
+                            <td>{{ allMyNumbers[0][$index] }}</td>
+                            <td>{{ allMyNumbers[1][$index] }}</td>
+                            <td>{{ XiYi[$index] }}</td>
+                            <td>{{ xSquared[$index] }}</td>
+                            <td>{{ ySquared[$index] }}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <td></td>
+                    <th>Sum</th>
+                    <td>{{XiYiSum}}</td>
+                    <td>{{xSquaredSum}}</td>
+                    <td>{{ySquaredSum}}</td>
+                    <tr>
+                        <td></td>
+                        <th>rBottom</th>
+                        <td>{{rBottom}}</td>
+                    </tr>
+                        <td></td>
+                        <th>rTop</th>
+                        <td>{{rTop}}</td>
+                    <tr>
+                        <td></td>
+                        <th>r</th>
+                        <td>{{r}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <th>r2</th>
+                        <td>{{rSquared}}</td>
+                    </tr>
+                    </tfoot>
+            </table>
+<br />			
+        <!-- Estimate -->
+            <table class="table-condensed table-bordered table-responsive" ng-if="Yk">
+                <thead>
+                    <th>Estimate Yk</th>
+                    <th>Yk</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Yk = beta0 + beta1 * Xk</td>
+                        <td>{{Yk}}</td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+        </div>
+    </div>
+</body>
+</html>
